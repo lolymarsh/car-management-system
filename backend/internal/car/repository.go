@@ -20,7 +20,7 @@ func (r *Repository) Create(ctx context.Context, car *model.Car) error {
 	return err
 }
 
-func (r *Repository) GetByID(ctx context.Context, id int64) (*model.Car, error) {
+func (r *Repository) GetByID(ctx context.Context, id string) (*model.Car, error) {
 	car := new(model.Car)
 	err := r.db.NewSelect().Model(car).Where("car_id = ?", id).Where("deleted_at IS NULL").Scan(ctx)
 	if err != nil {
@@ -43,7 +43,7 @@ func (r *Repository) Update(ctx context.Context, car *model.Car) error {
 	return err
 }
 
-func (r *Repository) Delete(ctx context.Context, id int64) error {
+func (r *Repository) Delete(ctx context.Context, id string) error {
 	_, err := r.db.NewUpdate().
 		Model((*model.Car)(nil)).
 		Set("deleted_at = NOW()").

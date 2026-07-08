@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/lolymarsh/car-management-system/internal/model"
 	"github.com/uptrace/bun"
 )
@@ -43,6 +44,7 @@ func (s *Service) Create(ctx context.Context, car *model.Car) (*model.Car, error
 		return nil, fmt.Errorf("registration_number, brand, and model are required")
 	}
 
+	car.CarID = uuid.New().String()
 	car.CreatedAt = time.Now()
 	car.UpdatedAt = time.Now()
 
@@ -52,7 +54,7 @@ func (s *Service) Create(ctx context.Context, car *model.Car) (*model.Car, error
 	return car, nil
 }
 
-func (s *Service) GetByID(ctx context.Context, id int64) (*model.Car, error) {
+func (s *Service) GetByID(ctx context.Context, id string) (*model.Car, error) {
 	car, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("car not found")
@@ -130,7 +132,7 @@ func (s *Service) List(ctx context.Context, req FilterRequest) (*FilterResponse,
 	}, nil
 }
 
-func (s *Service) Update(ctx context.Context, id int64, input *model.Car) (*model.Car, error) {
+func (s *Service) Update(ctx context.Context, id string, input *model.Car) (*model.Car, error) {
 	car, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("car not found")
@@ -163,7 +165,7 @@ func (s *Service) Update(ctx context.Context, id int64, input *model.Car) (*mode
 	return car, nil
 }
 
-func (s *Service) Delete(ctx context.Context, id int64) error {
+func (s *Service) Delete(ctx context.Context, id string) error {
 	_, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return fmt.Errorf("car not found")

@@ -9,7 +9,7 @@ import (
 type Car struct {
 	bun.BaseModel `bun:"table:cars"`
 
-	CarID              int64      `bun:"car_id,pk,autoincrement" json:"car_id"`
+	CarID              string     `bun:"car_id,pk" json:"car_id"`
 	RegistrationNumber string     `bun:"registration_number,notnull" json:"registration_number"`
 	Brand              string     `bun:"brand,notnull" json:"brand"`
 	Model              string     `bun:"model,notnull" json:"model"`

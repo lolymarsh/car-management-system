@@ -1,6 +1,7 @@
 -- +goose Up
 CREATE TABLE cars (
-    car_id              BIGSERIAL PRIMARY KEY,
+    car_id              UUID NOT NULL DEFAULT gen_random_uuid(),
+    PRIMARY KEY (car_id),
     registration_number VARCHAR(50)  NOT NULL,
     brand               VARCHAR(100) NOT NULL,
     model               VARCHAR(100) NOT NULL,

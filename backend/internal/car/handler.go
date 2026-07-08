@@ -2,7 +2,6 @@ package car
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/lolymarsh/car-management-system/internal/model"
@@ -31,8 +30,8 @@ func (h *Handler) CreateCar(c echo.Context) error {
 }
 
 func (h *Handler) GetCar(c echo.Context) error {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
+	id := c.Param("id")
+	if id == "" {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid id"})
 	}
 
@@ -59,8 +58,8 @@ func (h *Handler) ListCars(c echo.Context) error {
 }
 
 func (h *Handler) UpdateCar(c echo.Context) error {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
+	id := c.Param("id")
+	if id == "" {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid id"})
 	}
 
@@ -78,8 +77,8 @@ func (h *Handler) UpdateCar(c echo.Context) error {
 }
 
 func (h *Handler) DeleteCar(c echo.Context) error {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
+	id := c.Param("id")
+	if id == "" {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid id"})
 	}
 
