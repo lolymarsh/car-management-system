@@ -47,11 +47,24 @@ cp _env_example .env
 docker compose up -d --build
 ```
 
-หรือ ถ้าไม่มี docker ก็ต้องมี postgres  local แล้ว
+หรือ ถ้าไม่มี docker ก็ต้องมี postgres local แล้ว
 
 ```bash
 cd backend
 go run main.go
+```
+
+อย่าลืมรัน migrate ก่อนครั้งแรก หรือถ้ามี migration ใหม่
+
+```bash
+cd backend
+make migrate-up
+```
+
+ถ้าอยากย้อนกลับ
+
+```bash
+make migrate-down
 ```
 
 API พร้อมที่ `http://localhost:8080`

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Table, Button, Input, Space, Card, Popconfirm, message, Tag, Empty,
@@ -17,34 +17,33 @@ export default function CarList() {
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState('');
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await api.post('/api/cars/filter', {
-        search,
-        page,
-        page_size: pageSize,
-        sort_by: 'created_at',
-        sort_dir: 'desc',
-      });
-      setData(res?.data?.cars);
-      setTotal(res?.data?.total);
-    } catch {
-      message.error('Failed to fetch cars');
-    } finally {
-      setLoading(false);
-    }
-  }, [search, page, pageSize]);
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await api.post('/api/cars/filter', {
+          search,
+          page,
+          page_size: pageSize,
+          sort_by: 'created_at',
+          sort_dir: 'desc',
+        });
+        setData(res?.data?.cars);
+        setTotal(res?.data?.total);
+      } catch {
+        message.error('Failed to fetch cars');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
-  }, []);
+  }, [search, page, pageSize]);
 
   const handleDelete = async (id) => {
     try {
       await api.delete(`/api/cars/${id}`);
       message.success('Car deleted');
-      fetchData();
+      setPage(1);
     } catch {
       message.error('Failed to delete car');
     }
