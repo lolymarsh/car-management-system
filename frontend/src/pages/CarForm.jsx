@@ -15,17 +15,20 @@ export default function CarForm() {
 
   useEffect(() => {
     if (!isEdit) return;
-    setLoading(true);
-    api.get(`/api/cars/${car_id}`)
-      .then((res) => {
+    const loadCar = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get(`/api/cars/${car_id}`);
         form.setFieldsValue(res.data);
-      })
-      .catch(() => {
+      } catch {
         message.error('Failed to load car');
         navigate('/cars');
-      })
-      .finally(() => setLoading(false));
-  }, [car_id, isEdit, form, navigate]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCar();
+  }, []);
 
   const handleSubmit = async (values) => {
     setSubmitting(true);
