@@ -17,33 +17,34 @@ export default function CarList() {
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState('');
 
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const res = await api.post('/api/cars/filter', {
+        search,
+        page,
+        page_size: pageSize,
+        sort_by: 'created_at',
+        sort_dir: 'desc',
+      });
+      setData(res?.data?.cars);
+      setTotal(res?.data?.total);
+    } catch {
+      message.error('Failed to fetch cars');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await api.post('/api/cars/filter', {
-          search,
-          page,
-          page_size: pageSize,
-          sort_by: 'created_at',
-          sort_dir: 'desc',
-        });
-        setData(res?.data?.cars);
-        setTotal(res?.data?.total);
-      } catch {
-        message.error('Failed to fetch cars');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    loadData();
   }, [search, page, pageSize]);
 
   const handleDelete = async (id) => {
     try {
       await api.delete(`/api/cars/${id}`);
       message.success('Car deleted');
-      setPage(1);
+      loadData();
     } catch {
       message.error('Failed to delete car');
     }
