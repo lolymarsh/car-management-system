@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Card, Form, Input, InputNumber, Button, message, Spin,
+  Card, Form, Input, InputNumber, Button, message, Space, Spin,
 } from 'antd';
 import api from '../api';
 
