@@ -138,25 +138,12 @@ func (s *Service) Update(ctx context.Context, id string, input *model.Car) (*mod
 		return nil, fmt.Errorf("car not found")
 	}
 
-	if input.RegistrationNumber != "" {
-		car.RegistrationNumber = input.RegistrationNumber
-	}
-	if input.Brand != "" {
-		car.Brand = input.Brand
-	}
-	if input.Model != "" {
-		car.Model = input.Model
-	}
-	if input.Color != "" {
-		car.Color = input.Color
-	}
-	if input.Year != 0 {
-		car.Year = input.Year
-	}
-	if input.Notes != "" {
-		car.Notes = input.Notes
-	}
-
+	car.RegistrationNumber = input.RegistrationNumber
+	car.Brand = input.Brand
+	car.Model = input.Model
+	car.Color = input.Color
+	car.Year = input.Year
+	car.Notes = input.Notes
 	car.UpdatedAt = time.Now()
 
 	if err := s.repo.Update(ctx, car); err != nil {
