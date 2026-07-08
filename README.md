@@ -37,39 +37,26 @@ frontend/         # React
 
 ## รันยังไง
 
-เปิด 2 terminal
+เปด 2 terminal
 
-### Terminal 1 — Backend
+### Terminal 1 - Backend
 
-```bash
-cd backend
-cp _env_example .env
-docker compose up -d --build
-```
-
-หรือ ถ้าไม่มี docker ก็ต้องมี postgres local แล้ว
+step แรก ขึ้น docker และ migrate database
 
 ```bash
 cd backend
-go run main.go
+make setup
 ```
 
-อย่าลืมรัน migrate ก่อนครั้งแรก หรือถ้ามี migration ใหม่
+จากนั้น start backend
 
 ```bash
-cd backend
-make migrate-up
+make run
 ```
 
-ถ้าอยากย้อนกลับ
+API http://localhost:8080
 
-```bash
-make migrate-down
-```
-
-API พร้อมที่ `http://localhost:8080`
-
-### Terminal 2 — Frontend
+### Terminal 2 - Frontend
 
 ```bash
 cd frontend
@@ -77,7 +64,7 @@ npm install
 npm run dev
 ```
 
-เปิด `http://localhost:5173`
+เปิด http://localhost:5173
 
 ---
 
