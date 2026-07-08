@@ -1,0 +1,37 @@
+# === Environment & Secrets ===
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# === OS ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# === IDE / Editor ===
+.vscode/
+.idea/
+*.iml
+.agent/
+.claude/
+
+# === Go Backend ===
+backend/bin/
+backend/tmp/
+backend/vendor/
+backend/coverage.*
+backend/*.out
+backend/*.test
+backend/*.exe
+backend/*.exe~
+
+# === Node / Frontend ===
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.cache/
+frontend/*.tsbuildinfo
+frontend/coverage/
